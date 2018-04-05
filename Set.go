@@ -7,7 +7,7 @@ import (
 
 // Set -
 type Set interface {
-	In(...interface{}) bool
+	Have(...interface{}) bool
 	Subset(Set) bool
 	Superset(Set) bool
 	Add(...interface{})
@@ -24,7 +24,7 @@ type set struct {
 	Values map[interface{}]struct{}
 }
 
-func (s *set) In(keys ...interface{}) bool {
+func (s *set) Have(keys ...interface{}) bool {
 	for _, key := range keys {
 		if _, ok := s.Values[key]; !ok {
 			return false
@@ -38,7 +38,7 @@ func (s *set) Subset(t Set) bool {
 	for key := range s.Values {
 		keys = append(keys, key)
 	}
-	return t.In(keys...)
+	return t.Have(keys...)
 }
 
 func (s *set) Superset(t Set) bool {
@@ -73,7 +73,7 @@ func (s *set) And(t Set) Set {
 	r := &set{}
 	r.Clear()
 	for key := range s.Values {
-		if t.In(key) {
+		if t.Have(key) {
 			r.Values[key] = struct{}{}
 		}
 	}
@@ -83,7 +83,7 @@ func (s *set) And(t Set) Set {
 func (s *set) Xor(t Set) Set {
 	r := t.Copy()
 	for key := range s.Values {
-		if t.In(key) {
+		if t.Have(key) {
 			r.Remove(key)
 		} else {
 			r.Add(key)
