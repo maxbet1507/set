@@ -15,16 +15,16 @@ func TestNew(t *testing.T) {
 	}
 }
 
-func TestIn(t *testing.T) {
+func TestHave(t *testing.T) {
 	s1 := set.New(1, 2, 3)
 
-	if !s1.In(1) || !s1.In(2) || !s1.In(3) {
+	if !s1.Have(1) || !s1.Have(2) || !s1.Have(3) {
 		t.Fatal(s1)
 	}
-	if !s1.In(1, 2) || !s1.In(2, 3) || !s1.In(1, 3) {
+	if !s1.Have(1, 2) || !s1.Have(2, 3) || !s1.Have(1, 3) {
 		t.Fatal(s1)
 	}
-	if !s1.In(1, 2, 3) || s1.In(1, 2, 4) {
+	if !s1.Have(1, 2, 3) || s1.Have(1, 2, 4) {
 		t.Fatal(s1)
 	}
 }
